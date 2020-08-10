@@ -13,10 +13,24 @@
         <maven.compiler.target>1.8</maven.compiler.target>
         <jackson-version>2.11.2</jackson-version>
         <log4j2-verion>2.13.3</log4j2-verion>
+        <paho-mqtt-version>1.2.5</paho-mqtt-version>
+        <redis-jedis-version>3.3.0</redis-jedis-version>
     </properties>
 
 
     <dependencies>
+        <!-- MQTT -->
+        <dependency>
+            <groupId>org.eclipse.paho</groupId>
+            <artifactId>org.eclipse.paho.client.mqttv3</artifactId>
+            <version>${paho-mqtt-version}</version>
+        </dependency>
+        <!-- Redis -->
+        <dependency>
+            <groupId>redis.clients</groupId>
+            <artifactId>jedis</artifactId>
+            <version>${redis-jedis-version}</version>
+        </dependency>
         <!-- Jackson -->
         <dependency>
             <groupId>com.fasterxml.jackson.dataformat</groupId>
