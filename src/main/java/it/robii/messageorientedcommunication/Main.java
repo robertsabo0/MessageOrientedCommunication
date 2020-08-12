@@ -2,6 +2,7 @@ package it.robii.messageorientedcommunication;
 
 
 import it.robii.messageorientedcommunication.config.ConfigManager;
+import it.robii.messageorientedcommunication.kafka.KafkaPubSubComm;
 import it.robii.messageorientedcommunication.mqtt.MQTTPubSubComm;
 import it.robii.messageorientedcommunication.redis.RedisPubSubComm;
 import lombok.extern.log4j.Log4j2;
@@ -18,7 +19,8 @@ public class Main {
         topic = ConfigManager.appYamlConfig().getPubSubTopic();
         message = "EvetiKur be: "+ Instant.now();
         // TestMqtt();
-        TestRedis();
+        // TestRedis();
+        TestKafka();
     }
 
     static void TestMqtt(){
@@ -31,6 +33,15 @@ public class Main {
 
     static void TestRedis(){
         try(RedisPubSubComm mqttPubSubComm = RedisPubSubComm.buildAndConnect()){
+            testPubSub(mqttPubSubComm);
+        } catch (Exception e) {
+            log.error(e);
+            e.printStackTrace();
+        }
+    }
+
+    static void TestKafka(){
+        try(KafkaPubSubComm mqttPubSubComm = KafkaPubSubComm.buildAndConnect()){
             testPubSub(mqttPubSubComm);
         } catch (Exception e) {
             log.error(e);

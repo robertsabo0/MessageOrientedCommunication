@@ -15,10 +15,18 @@
         <log4j2-verion>2.13.3</log4j2-verion>
         <paho-mqtt-version>1.2.5</paho-mqtt-version>
         <redis-jedis-version>3.3.0</redis-jedis-version>
+        <apache-kafka-version>2.6.0</apache-kafka-version>
     </properties>
 
 
     <dependencies>
+        <!-- https://mvnrepository.com/artifact/org.apache.kafka/kafka-clients -->
+        <dependency>
+            <groupId>org.apache.kafka</groupId>
+            <artifactId>kafka-clients</artifactId>
+            <version>${apache-kafka-version}</version>
+        </dependency>
+
         <!-- MQTT -->
         <dependency>
             <groupId>org.eclipse.paho</groupId>
