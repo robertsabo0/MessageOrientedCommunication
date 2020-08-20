@@ -1,6 +1,8 @@
 package it.robii.messageorientedcommunication.kafka;
 
 import it.robii.messageorientedcommunication.PubSubComm;
+import it.robii.messageorientedcommunication.config.AppYamlConfig;
+import it.robii.messageorientedcommunication.config.ConfigManager;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
@@ -13,6 +15,7 @@ import org.apache.kafka.common.serialization.LongSerializer;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.apache.kafka.common.serialization.StringSerializer;
 
+import java.rmi.server.ExportException;
 import java.time.Duration;
 import java.util.Collections;
 import java.util.Properties;
@@ -27,7 +30,7 @@ public class KafkaPubSubComm implements PubSubComm {
         return kafka;
     }
 
-    public static String KAFKA_BROKERS = "localhost:9092";
+    public static String KAFKA_BROKERS = ConfigManager.appYamlConfig().getKafkaAddress();
     public static Integer MESSAGE_COUNT=1000;
     public static String CLIENT_ID="client1";
     public static String TOPIC_NAME="demo";
@@ -85,32 +88,32 @@ public class KafkaPubSubComm implements PubSubComm {
         }
     }
 
+    Thread subscribeThread;
     @Override
     public void subscribe(String topic, Consumer<String> onMessage) {
         consumer.subscribe(Collections.singletonList(topic));
-        new Thread(() -> {
+        subscribeThread = new Thread(() -> {
             while (true) {
-                ConsumerRecords<Long, String> consumerRecords = consumer.poll(Duration.ofMillis(1000));
+                ConsumerRecords<Long, String> consumerRecords;
+                try {
+                    consumerRecords = consumer.poll(Duration.ofMillis(1000));
+                } catch (Exception ex){ break; }
+                if(Thread.currentThread().isInterrupted()) break;
                 // 1000 is the time in milliseconds consumer will wait if no record is found at broker.
-                if (consumerRecords.count() == 0) {
-                    continue;
-                }
+                if (consumerRecords.count() == 0)  continue;
                 //print each record.
                 consumerRecords.forEach(record -> {
-                    System.out.println("Record Key " + record.key());
-                    System.out.println("Record value " + record.value());
-                    System.out.println("Record partition " + record.partition());
-                    System.out.println("Record offset " + record.offset());
                     onMessage.accept(record.value());
                 });
                 // commits the offset of record to broker.
                 consumer.commitAsync();
             }
-        }).start();
+        });
+        subscribeThread.start();
     }
 
     @Override
     public void close() throws Exception {
-
+        subscribeThread.interrupt();
     }
 }

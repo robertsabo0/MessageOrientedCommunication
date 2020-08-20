@@ -8,4 +8,5 @@ public class AppYamlConfig {
     private String pubSubTopic;
     private String mqttAddress;
     private String redisAddress;
+    private String kafkaAddress;
 }

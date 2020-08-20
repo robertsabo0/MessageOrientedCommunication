@@ -1,7 +1,9 @@
 package it.robii.messageorientedcommunication.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import lombok.extern.log4j.Log4j2;
 
 import java.io.File;
@@ -27,11 +29,19 @@ public class ConfigManager {
         } catch (Throwable e) {
             log.error(e.getMessage(), e);
         }
+        initObjectMapper();
     }
 
     private static AppYamlConfig appYamlConfig;
+    private static ObjectMapper objectMapper;
     public static AppYamlConfig appYamlConfig() {
         return appYamlConfig;
     }
+    public static ObjectMapper getObjectMapper(){return objectMapper; }
 
+    static void initObjectMapper(){
+        objectMapper = new ObjectMapper();
+        objectMapper.registerModule(new JavaTimeModule());
+        objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+    }
 }

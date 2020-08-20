@@ -1,0 +1,312 @@
+{
+  "testParams" : {
+    "testDurationSeconds" : 10,
+    "everyXms" : 1000,
+    "sendYmessages" : 10,
+    "ofZsize" : 10,
+    "paralelOnTThreads" : 1,
+    "commType" : "KAFKA"
+  },
+  "resultsCount" : 100,
+  "results" : [ {
+    "tsFromStart" : 1047,
+    "responseTime" : 36
+  }, {
+    "tsFromStart" : 1056,
+    "responseTime" : 15
+  }, {
+    "tsFromStart" : 1057,
+    "responseTime" : 12
+  }, {
+    "tsFromStart" : 1058,
+    "responseTime" : 11
+  }, {
+    "tsFromStart" : 1061,
+    "responseTime" : 10
+  }, {
+    "tsFromStart" : 1065,
+    "responseTime" : 11
+  }, {
+    "tsFromStart" : 1066,
+    "responseTime" : 10
+  }, {
+    "tsFromStart" : 1067,
+    "responseTime" : 8
+  }, {
+    "tsFromStart" : 1068,
+    "responseTime" : 7
+  }, {
+    "tsFromStart" : 1073,
+    "responseTime" : 10
+  }, {
+    "tsFromStart" : 2095,
+    "responseTime" : 15
+  }, {
+    "tsFromStart" : 2100,
+    "responseTime" : 9
+  }, {
+    "tsFromStart" : 2101,
+    "responseTime" : 6
+  }, {
+    "tsFromStart" : 2106,
+    "responseTime" : 8
+  }, {
+    "tsFromStart" : 2107,
+    "responseTime" : 5
+  }, {
+    "tsFromStart" : 2111,
+    "responseTime" : 6
+  }, {
+    "tsFromStart" : 2112,
+    "responseTime" : 6
+  }, {
+    "tsFromStart" : 2115,
+    "responseTime" : 6
+  }, {
+    "tsFromStart" : 2116,
+    "responseTime" : 5
+  }, {
+    "tsFromStart" : 2117,
+    "responseTime" : 4
+  }, {
+    "tsFromStart" : 3129,
+    "responseTime" : 12
+  }, {
+    "tsFromStart" : 3142,
+    "responseTime" : 13
+  }, {
+    "tsFromStart" : 3144,
+    "responseTime" : 7
+  }, {
+    "tsFromStart" : 3147,
+    "responseTime" : 6
+  }, {
+    "tsFromStart" : 3148,
+    "responseTime" : 4
+  }, {
+    "tsFromStart" : 3151,
+    "responseTime" : 4
+  }, {
+    "tsFromStart" : 3152,
+    "responseTime" : 3
+  }, {
+    "tsFromStart" : 3156,
+    "responseTime" : 4
+  }, {
+    "tsFromStart" : 3157,
+    "responseTime" : 4
+  }, {
+    "tsFromStart" : 3162,
+    "responseTime" : 5
+  }, {
+    "tsFromStart" : 4185,
+    "responseTime" : 16
+  }, {
+    "tsFromStart" : 4186,
+    "responseTime" : 7
+  }, {
+    "tsFromStart" : 4190,
+    "responseTime" : 6
+  }, {
+    "tsFromStart" : 4194,
+    "responseTime" : 6
+  }, {
+    "tsFromStart" : 4195,
+    "responseTime" : 5
+  }, {
+    "tsFromStart" : 4199,
+    "responseTime" : 7
+  }, {
+    "tsFromStart" : 4200,
+    "responseTime" : 5
+  }, {
+    "tsFromStart" : 4204,
+    "responseTime" : 6
+  }, {
+    "tsFromStart" : 4205,
+    "responseTime" : 5
+  }, {
+    "tsFromStart" : 4208,
+    "responseTime" : 7
+  }, {
+    "tsFromStart" : 5219,
+    "responseTime" : 11
+  }, {
+    "tsFromStart" : 5226,
+    "responseTime" : 7
+  }, {
+    "tsFromStart" : 5230,
+    "responseTime" : 5
+  }, {
+    "tsFromStart" : 5233,
+    "responseTime" : 6
+  }, {
+    "tsFromStart" : 5234,
+    "responseTime" : 4
+  }, {
+    "tsFromStart" : 5238,
+    "responseTime" : 5
+  }, {
+    "tsFromStart" : 5239,
+    "responseTime" : 5
+  }, {
+    "tsFromStart" : 5243,
+    "responseTime" : 5
+  }, {
+    "tsFromStart" : 5244,
+    "responseTime" : 4
+  }, {
+    "tsFromStart" : 5248,
+    "responseTime" : 5
+  }, {
+    "tsFromStart" : 6258,
+    "responseTime" : 11
+  }, {
+    "tsFromStart" : 6264,
+    "responseTime" : 6
+  }, {
+    "tsFromStart" : 6270,
+    "responseTime" : 6
+  }, {
+    "tsFromStart" : 6271,
+    "responseTime" : 4
+  }, {
+    "tsFromStart" : 6274,
+    "responseTime" : 5
+  }, {
+    "tsFromStart" : 6275,
+    "responseTime" : 5
+  }, {
+    "tsFromStart" : 6278,
+    "responseTime" : 5
+  }, {
+    "tsFromStart" : 6279,
+    "responseTime" : 3
+  }, {
+    "tsFromStart" : 6283,
+    "responseTime" : 5
+  }, {
+    "tsFromStart" : 6283,
+    "responseTime" : 5
+  }, {
+    "tsFromStart" : 7297,
+    "responseTime" : 8
+  }, {
+    "tsFromStart" : 7303,
+    "responseTime" : 6
+  }, {
+    "tsFromStart" : 7307,
+    "responseTime" : 3
+  }, {
+    "tsFromStart" : 7311,
+    "responseTime" : 6
+  }, {
+    "tsFromStart" : 7312,
+    "responseTime" : 6
+  }, {
+    "tsFromStart" : 7316,
+    "responseTime" : 5
+  }, {
+    "tsFromStart" : 7317,
+    "responseTime" : 5
+  }, {
+    "tsFromStart" : 7321,
+    "responseTime" : 5
+  }, {
+    "tsFromStart" : 7321,
+    "responseTime" : 3
+  }, {
+    "tsFromStart" : 7325,
+    "responseTime" : 4
+  }, {
+    "tsFromStart" : 8335,
+    "responseTime" : 5
+  }, {
+    "tsFromStart" : 8341,
+    "responseTime" : 9
+  }, {
+    "tsFromStart" : 8345,
+    "responseTime" : 8
+  }, {
+    "tsFromStart" : 8346,
+    "responseTime" : 6
+  }, {
+    "tsFromStart" : 8350,
+    "responseTime" : 7
+  }, {
+    "tsFromStart" : 8351,
+    "responseTime" : 4
+  }, {
+    "tsFromStart" : 8354,
+    "responseTime" : 6
+  }, {
+    "tsFromStart" : 8355,
+    "responseTime" : 5
+  }, {
+    "tsFromStart" : 8359,
+    "responseTime" : 5
+  }, {
+    "tsFromStart" : 8359,
+    "responseTime" : 5
+  }, {
+    "tsFromStart" : 9370,
+    "responseTime" : 6
+  }, {
+    "tsFromStart" : 9376,
+    "responseTime" : 7
+  }, {
+    "tsFromStart" : 9381,
+    "responseTime" : 7
+  }, {
+    "tsFromStart" : 9385,
+    "responseTime" : 6
+  }, {
+    "tsFromStart" : 9386,
+    "responseTime" : 4
+  }, {
+    "tsFromStart" : 9390,
+    "responseTime" : 6
+  }, {
+    "tsFromStart" : 9394,
+    "responseTime" : 6
+  }, {
+    "tsFromStart" : 9395,
+    "responseTime" : 5
+  }, {
+    "tsFromStart" : 9398,
+    "responseTime" : 6
+  }, {
+    "tsFromStart" : 9399,
+    "responseTime" : 3
+  }, {
+    "tsFromStart" : 10420,
+    "responseTime" : 5
+  }, {
+    "tsFromStart" : 10424,
+    "responseTime" : 4
+  }, {
+    "tsFromStart" : 10429,
+    "responseTime" : 7
+  }, {
+    "tsFromStart" : 10432,
+    "responseTime" : 6
+  }, {
+    "tsFromStart" : 10433,
+    "responseTime" : 4
+  }, {
+    "tsFromStart" : 10436,
+    "responseTime" : 5
+  }, {
+    "tsFromStart" : 10437,
+    "responseTime" : 5
+  }, {
+    "tsFromStart" : 10440,
+    "responseTime" : 6
+  }, {
+    "tsFromStart" : 10442,
+    "responseTime" : 4
+  }, {
+    "tsFromStart" : 10445,
+    "responseTime" : 6
+  } ]
+}

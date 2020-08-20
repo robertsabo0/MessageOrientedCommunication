@@ -2,3 +2,4 @@ hellostring: "Hello, world!"
 pubSubTopic: robiTestingTopic
 mqttAddress: tcp://localhost:1883
 redisAddress: tcp://localhost:6379
+kafkaAddress: tcp://localhost:9092

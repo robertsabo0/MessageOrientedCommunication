@@ -1,0 +1,72 @@
+{
+  "testParams" : {
+    "testDurationSeconds" : 10,
+    "everyXms" : 1000,
+    "sendYmessages" : 2,
+    "ofZsize" : 10,
+    "paralelOnTThreads" : 1,
+    "commType" : "KAFKA"
+  },
+  "resultsCount" : 20,
+  "results" : [ {
+    "tsFromStart" : 1811,
+    "responseTime" : 788
+  }, {
+    "tsFromStart" : 1814,
+    "responseTime" : 762
+  }, {
+    "tsFromStart" : 2066,
+    "responseTime" : 4
+  }, {
+    "tsFromStart" : 2071,
+    "responseTime" : 5
+  }, {
+    "tsFromStart" : 3079,
+    "responseTime" : 4
+  }, {
+    "tsFromStart" : 3084,
+    "responseTime" : 5
+  }, {
+    "tsFromStart" : 4097,
+    "responseTime" : 13
+  }, {
+    "tsFromStart" : 4103,
+    "responseTime" : 6
+  }, {
+    "tsFromStart" : 5121,
+    "responseTime" : 13
+  }, {
+    "tsFromStart" : 5125,
+    "responseTime" : 6
+  }, {
+    "tsFromStart" : 6139,
+    "responseTime" : 7
+  }, {
+    "tsFromStart" : 6143,
+    "responseTime" : 4
+  }, {
+    "tsFromStart" : 7158,
+    "responseTime" : 10
+  }, {
+    "tsFromStart" : 7165,
+    "responseTime" : 7
+  }, {
+    "tsFromStart" : 8179,
+    "responseTime" : 11
+  }, {
+    "tsFromStart" : 8185,
+    "responseTime" : 7
+  }, {
+    "tsFromStart" : 9204,
+    "responseTime" : 9
+  }, {
+    "tsFromStart" : 9205,
+    "responseTime" : 4
+  }, {
+    "tsFromStart" : 10222,
+    "responseTime" : 10
+  }, {
+    "tsFromStart" : 10228,
+    "responseTime" : 7
+  } ]
+}
