@@ -1,0 +1,2 @@
+/*NOT THIS*/ docker run -d --cap-add sys_resource --name redis -p 8443:8443 -p 9443:9443 -p 12000:12000 redislabs/redis
+docker run -p 8443:8443 -p 6379:6379 -p 9443:9443 -p 12000:12000 --name some-redis -d redis redis-server --appendonly yes 
