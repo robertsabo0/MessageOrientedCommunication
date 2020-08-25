@@ -16,7 +16,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": 1,
-  "iteration": 1598388593954,
+  "iteration": 1598397357171,
   "links": [],
   "panels": [
     {
@@ -292,8 +292,8 @@
         "allValue": null,
         "current": {
           "selected": false,
-          "text": "4",
-          "value": "4"
+          "text": "22",
+          "value": "22"
         },
         "datasource": "MySQL",
         "definition": "select testNo from test_params",
@@ -314,7 +314,7 @@
             "value": "2"
           },
           {
-            "selected": true,
+            "selected": false,
             "text": "4",
             "value": "4"
           }
@@ -333,8 +333,8 @@
     ]
   },
   "time": {
-    "from": "1970-01-01T00:00:00.091Z",
-    "to": "1970-01-01T00:00:01.029Z"
+    "from": "1970-01-01T00:00:00.391Z",
+    "to": "1970-01-01T00:00:11.322Z"
   },
   "timepicker": {
     "refresh_intervals": [
@@ -353,5 +353,5 @@
   "timezone": "",
   "title": "PerformanceTestVisualisation",
   "uid": "Z_ESiPNGz",
-  "version": 5
+  "version": 6
 }

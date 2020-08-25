@@ -1,0 +1,89 @@
+package it.robii.messageorientedcommunication.test.results;
+
+import com.fasterxml.classmate.AnnotationConfiguration;
+import it.robii.messageorientedcommunication.test.TestParams;
+import it.robii.messageorientedcommunication.test.results.dbenities.DbTestParams;
+import it.robii.messageorientedcommunication.test.results.dbenities.DbTestResult;
+import it.robii.messageorientedcommunication.test.results.dbenities.DbTestRun;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.boot.Metadata;
+import org.hibernate.boot.MetadataSources;
+import org.hibernate.boot.registry.StandardServiceRegistry;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.hibernate.cfg.Configuration;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+
+public class DBResultSaver extends ResultSaver{
+
+    static DbTestParams dbTestParams;
+    DbTestRun testRun;
+    List<DbTestResult> testResultList;
+
+    @Override
+    public void initTestConcrete(TestParams params) {
+        saveTestParams(params);
+
+        testResultList = new ArrayList<>();
+        testRun = new DbTestRun();
+        testRun.setCommType(params.getCommType());
+        testRun.setTestParamsByTestParamsId(dbTestParams);
+        Session session = buildSessionFactory().openSession();
+        session.save(testRun);
+        session.close();
+    }
+
+    @Override
+    public void addResult(long msFromStart, long receiveTSMinusSentTSInMS) {
+        DbTestResult res = new DbTestResult();
+        res.setResponseTime(receiveTSMinusSentTSInMS);
+        res.setTsFromStart(msFromStart);
+        res.setTestRunByTestRunId(testRun);
+        testResultList.add(res);
+    }
+
+    @Override
+    public void done() {
+        Session session = buildSessionFactory().openSession();
+        for(DbTestResult res : testResultList)
+            session.save(res);
+        session.close();
+    }
+
+
+    static void saveTestParams(TestParams params){
+        if(dbTestParams != null) return;
+        dbTestParams = new DbTestParams(params);
+
+        Session session = buildSessionFactory().openSession();
+        session.save(dbTestParams);
+        session.close();
+    }
+
+    private static final SessionFactory sessionFactory = buildSessionFactory();
+
+    private static SessionFactory buildSessionFactory()
+    {
+        try
+        {
+            return new Configuration().configure("hibernate.cfg.xml").buildSessionFactory();
+        }
+        catch (Throwable ex) {
+            // Make sure you log the exception, as it might be swallowed
+            System.err.println("Initial SessionFactory creation failed." + ex);
+            throw new ExceptionInInitializerError(ex);
+        }
+    }
+
+    public static SessionFactory getSessionFactory() {
+        return sessionFactory;
+    }
+
+    public static void shutdown() {
+        // Close caches and connection pools
+        getSessionFactory().close();
+    }
+}

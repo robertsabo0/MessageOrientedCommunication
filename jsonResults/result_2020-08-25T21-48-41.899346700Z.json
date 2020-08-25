@@ -1,0 +1,156 @@
+{
+  "testParams" : {
+    "testDurationSeconds" : 10,
+    "everyXms" : 500,
+    "sendYmessages" : 3,
+    "ofZsize" : 10,
+    "paralelOnTThreads" : 1,
+    "commType" : "MQTT"
+  },
+  "resultsCount" : 48,
+  "results" : [ {
+    "tsFromStart" : 601,
+    "responseTime" : 92
+  }, {
+    "tsFromStart" : 631,
+    "responseTime" : 61
+  }, {
+    "tsFromStart" : 633,
+    "responseTime" : 29
+  }, {
+    "tsFromStart" : 1226,
+    "responseTime" : 77
+  }, {
+    "tsFromStart" : 1262,
+    "responseTime" : 63
+  }, {
+    "tsFromStart" : 1266,
+    "responseTime" : 34
+  }, {
+    "tsFromStart" : 1843,
+    "responseTime" : 75
+  }, {
+    "tsFromStart" : 1874,
+    "responseTime" : 55
+  }, {
+    "tsFromStart" : 1876,
+    "responseTime" : 31
+  }, {
+    "tsFromStart" : 2457,
+    "responseTime" : 69
+  }, {
+    "tsFromStart" : 2487,
+    "responseTime" : 55
+  }, {
+    "tsFromStart" : 2489,
+    "responseTime" : 27
+  }, {
+    "tsFromStart" : 3070,
+    "responseTime" : 73
+  }, {
+    "tsFromStart" : 3100,
+    "responseTime" : 55
+  }, {
+    "tsFromStart" : 3103,
+    "responseTime" : 32
+  }, {
+    "tsFromStart" : 3723,
+    "responseTime" : 106
+  }, {
+    "tsFromStart" : 3764,
+    "responseTime" : 85
+  }, {
+    "tsFromStart" : 3771,
+    "responseTime" : 43
+  }, {
+    "tsFromStart" : 4366,
+    "responseTime" : 82
+  }, {
+    "tsFromStart" : 4410,
+    "responseTime" : 85
+  }, {
+    "tsFromStart" : 4417,
+    "responseTime" : 45
+  }, {
+    "tsFromStart" : 4999,
+    "responseTime" : 78
+  }, {
+    "tsFromStart" : 5038,
+    "responseTime" : 76
+  }, {
+    "tsFromStart" : 5041,
+    "responseTime" : 39
+  }, {
+    "tsFromStart" : 5625,
+    "responseTime" : 82
+  }, {
+    "tsFromStart" : 5669,
+    "responseTime" : 85
+  }, {
+    "tsFromStart" : 5676,
+    "responseTime" : 44
+  }, {
+    "tsFromStart" : 6252,
+    "responseTime" : 71
+  }, {
+    "tsFromStart" : 6289,
+    "responseTime" : 63
+  }, {
+    "tsFromStart" : 6293,
+    "responseTime" : 38
+  }, {
+    "tsFromStart" : 6884,
+    "responseTime" : 82
+  }, {
+    "tsFromStart" : 6928,
+    "responseTime" : 77
+  }, {
+    "tsFromStart" : 6933,
+    "responseTime" : 42
+  }, {
+    "tsFromStart" : 7549,
+    "responseTime" : 107
+  }, {
+    "tsFromStart" : 7599,
+    "responseTime" : 101
+  }, {
+    "tsFromStart" : 7606,
+    "responseTime" : 51
+  }, {
+    "tsFromStart" : 8197,
+    "responseTime" : 83
+  }, {
+    "tsFromStart" : 8235,
+    "responseTime" : 79
+  }, {
+    "tsFromStart" : 8238,
+    "responseTime" : 38
+  }, {
+    "tsFromStart" : 8843,
+    "responseTime" : 92
+  }, {
+    "tsFromStart" : 8881,
+    "responseTime" : 83
+  }, {
+    "tsFromStart" : 8884,
+    "responseTime" : 38
+  }, {
+    "tsFromStart" : 9464,
+    "responseTime" : 77
+  }, {
+    "tsFromStart" : 9503,
+    "responseTime" : 76
+  }, {
+    "tsFromStart" : 9505,
+    "responseTime" : 38
+  }, {
+    "tsFromStart" : 10097,
+    "responseTime" : 85
+  }, {
+    "tsFromStart" : 10142,
+    "responseTime" : 84
+  }, {
+    "tsFromStart" : 10147,
+    "responseTime" : 43
+  } ]
+}

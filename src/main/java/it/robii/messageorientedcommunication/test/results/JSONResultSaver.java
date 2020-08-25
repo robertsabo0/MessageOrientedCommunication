@@ -14,20 +14,17 @@ import java.time.Instant;
 import java.time.temporal.TemporalUnit;
 import java.util.*;
 
-public class JSONResultSaver implements ResultSaver {
+public class JSONResultSaver extends ResultSaver {
 
     JSONResult result;
-    Instant start;
     @Override
-    public void initTest(TestParams params) {
-        start = Instant.now();
+    public void initTestConcrete(TestParams params) {
         result = new JSONResult(params);
     }
 
     @Override
-    public void addResult(long receiveTSMinusSentTS) {
-        Duration diff = Duration.between(start, Instant.now());
-        result.results.add(new JSONSingleResult(diff.toMillis(),receiveTSMinusSentTS));
+    public void addResult(long msFromStart, long receiveTSMinusSentTS) {
+        result.results.add(new JSONSingleResult(msFromStart,receiveTSMinusSentTS));
     }
     @Override
     public void done(){

@@ -16,6 +16,8 @@
         <paho-mqtt-version>1.2.5</paho-mqtt-version>
         <redis-jedis-version>3.3.0</redis-jedis-version>
         <apache-kafka-version>2.6.0</apache-kafka-version>
+        <mysql-verion>8.0.21</mysql-verion>
+        <hibernate-version>5.4.20.Final</hibernate-version>
     </properties>
 
 
@@ -68,11 +70,24 @@
             <version>${log4j2-verion}</version>
         </dependency>
 
+        <!-- lombok -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>1.18.12</version>
             <scope>provided</scope>
+        </dependency>
+
+        <!-- MySql-->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>${mysql-verion}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>${hibernate-version}</version>
         </dependency>
     </dependencies>
 </project>
