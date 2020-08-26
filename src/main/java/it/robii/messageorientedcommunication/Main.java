@@ -11,9 +11,7 @@ import it.robii.messageorientedcommunication.test.results.DBResultSaver;
 import it.robii.messageorientedcommunication.test.results.JSONResultSaver;
 import it.robii.messageorientedcommunication.test.results.ResultSaver;
 import lombok.extern.log4j.Log4j2;
-import org.apache.logging.log4j.core.config.plugins.util.ResolverUtil;
 
-import java.time.Duration;
 import java.time.Instant;
 
 @Log4j2
@@ -31,10 +29,10 @@ public class Main {
         // TestDBResultSaver();
 
         int testDuration = 10;
-        int everyXms = 500;
-        int sendYmessages = 3;
-        int msgSize = 10;
-        int paralelOnThreads = 1;
+        int everyXms = 200;
+        int sendYmessages = 10;
+        int msgSize = 100;
+        int paralelOnThreads = 3;
         // ResultSaver resultSaver = new JSONResultSaver();
         ResultSaver resultSaver = new DBResultSaver();
 
@@ -48,10 +46,13 @@ public class Main {
             log.info("Starting test with "+commType);
             sleep(1000);
             PerfTester.InitTest(testDuration, everyXms, sendYmessages, msgSize, paralelOnThreads, commType, resultSaver)
-                    .start();
+                    .smashIt();
             log.info("done test with "+commType);
             sleep(1000);
         }
+        log.info("Done with all testes!");
+        sleep(2000);
+        System.exit(0);
     }
 
     private static void TestDBResultSaver() {
@@ -63,7 +64,7 @@ public class Main {
         res.done();
     }
 
-    static void sleep(int ms){
+    public static void sleep(int ms){
         try {
             Thread.sleep(ms);
         } catch (InterruptedException e) {
