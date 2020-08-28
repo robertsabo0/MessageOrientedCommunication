@@ -44,6 +44,8 @@ public class MQTTPubSubComm implements PubSubComm {
     @Override
     public boolean connect() {
         try {
+            MqttConnectOptions connectOptions = new MqttConnectOptions();
+            connectOptions.setMaxInflight(Integer.MAX_VALUE);
             mqttClient.connect();
             return isConnected();
         } catch (MqttException e) {
@@ -55,7 +57,9 @@ public class MQTTPubSubComm implements PubSubComm {
     @Override
     public void publish(String topic, String message) {
         try {
-            mqttClient.publish(topic, new MqttMessage(message.getBytes()));
+            MqttMessage msg = new MqttMessage(message.getBytes());
+            msg.setQos(0);
+            mqttClient.publish(topic, msg);
         } catch (MqttException e) {
             log.error(e);
         }

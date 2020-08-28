@@ -88,6 +88,8 @@ public class PerfTester {
         waitForReceiveAllMessages();
         log.debug("Ok, all done for now... yea");
         resultSaver.done();
+
+        try{ communication.close();} catch (Exception e){log.error("Error on close: "+e.getMessage());}
     }
 
     /**

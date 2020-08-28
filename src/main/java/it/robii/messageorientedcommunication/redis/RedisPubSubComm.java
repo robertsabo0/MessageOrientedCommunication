@@ -54,14 +54,16 @@ public class RedisPubSubComm implements PubSubComm {
         final JedisPubSub jedisPubSub = new JedisPubSub() {
             @Override
             public void onMessage(String channel, String message) {
-
                 log.debug("Message received");
                 onMessageAction.accept(message);
             }
         };
-        new Thread(() -> {
+        Thread th = new Thread(() -> {
             getJedis().subscribe(jedisPubSub, topic);
-        }).start();
+        });
+        th.setName("RedisSubscribeThread");
+        th.setDaemon(true);
+        th.start();
         log.debug("subscribed to topic!");
     }
 

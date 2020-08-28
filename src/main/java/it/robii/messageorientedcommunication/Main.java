@@ -21,7 +21,6 @@ public class Main {
     static String message;
 
     public static void main(String[] args) {
-
         log.debug(ConfigManager.appYamlConfig().getHellostring());
         topic = ConfigManager.appYamlConfig().getPubSubTopic();
         message = "EvetiKur be: "+ Instant.now();
@@ -29,20 +28,25 @@ public class Main {
         // TestDBResultSaver();
 
         int testDuration = 10;
-        int everyXms = 200;
+        int everyXms = 50;
         int sendYmessages = 10;
-        int msgSize = 100;
-        int paralelOnThreads = 3;
+        int msgSize = 1000;
+        int paralelOnThreads = 5;
         // ResultSaver resultSaver = new JSONResultSaver();
         ResultSaver resultSaver = new DBResultSaver();
 
-/*
+        /*
         switch (commType){
             case KAFKA: break; // TestKafka(); break; neki problemi. ne mogu 2 puta subscribe. Zabaviti se s ovim...
             case MQTT: TestMqtt(); break;
             case REDIS: TestRedis(); break;
         }*/
-        for(CommType commType : CommType.values()) {
+        CommType[] commTypesOrdered = {
+          // CommType.KAFKA,
+          // CommType.REDIS,
+          CommType.MQTT
+        };
+        for(CommType commType : commTypesOrdered) {
             log.info("Starting test with "+commType);
             sleep(1000);
             PerfTester.InitTest(testDuration, everyXms, sendYmessages, msgSize, paralelOnThreads, commType, resultSaver)

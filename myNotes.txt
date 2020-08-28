@@ -1,0 +1,4 @@
+testNo<27 qos was default.
+on testNo=27
+- first got error: Too many publishes in progress (32202)
+- changed QoS to 0, and got lot better performances (default QoS=1)

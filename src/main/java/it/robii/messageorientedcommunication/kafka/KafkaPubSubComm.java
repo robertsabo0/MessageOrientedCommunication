@@ -3,6 +3,7 @@ package it.robii.messageorientedcommunication.kafka;
 import it.robii.messageorientedcommunication.PubSubComm;
 import it.robii.messageorientedcommunication.config.AppYamlConfig;
 import it.robii.messageorientedcommunication.config.ConfigManager;
+import lombok.extern.log4j.Log4j2;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
@@ -22,6 +23,7 @@ import java.util.Properties;
 import java.util.concurrent.ExecutionException;
 import java.util.function.Consumer;
 
+@Log4j2
 public class KafkaPubSubComm implements PubSubComm {
 
     public static KafkaPubSubComm buildAndConnect(){
@@ -31,9 +33,7 @@ public class KafkaPubSubComm implements PubSubComm {
     }
 
     public static String KAFKA_BROKERS = ConfigManager.appYamlConfig().getKafkaAddress();
-    public static Integer MESSAGE_COUNT=1000;
     public static String CLIENT_ID="client1";
-    public static String TOPIC_NAME="demo";
     public static String GROUP_ID_CONFIG="consumerGroup1";
     public static Integer MAX_NO_MESSAGE_FOUND_COUNT=100;
     public static String OFFSET_RESET_LATEST="latest";
@@ -41,26 +41,22 @@ public class KafkaPubSubComm implements PubSubComm {
     public static Integer MAX_POLL_RECORDS=1;
 
 
-    Properties producerProperties;
-    Properties consumerProperties;
+    Properties properties;
     KafkaProducer<Long, String> producer;
     KafkaConsumer<Long, String> consumer;
     public KafkaPubSubComm(){
-        producerProperties = new Properties();
-        producerProperties.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, KAFKA_BROKERS);
-        producerProperties.put(ProducerConfig.CLIENT_ID_CONFIG, CLIENT_ID);
-        producerProperties.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, LongSerializer.class.getName());
-        producerProperties.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
-        producerProperties.put(ProducerConfig.REQUEST_TIMEOUT_MS_CONFIG, 5000);
-        consumerProperties = new Properties();
-        consumerProperties.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, KAFKA_BROKERS);
-        consumerProperties.put(ConsumerConfig.GROUP_ID_CONFIG, GROUP_ID_CONFIG);
-        consumerProperties.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, LongDeserializer.class.getName());
-        consumerProperties.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
-        consumerProperties.put(ConsumerConfig.MAX_POLL_RECORDS_CONFIG, MAX_POLL_RECORDS);
-        consumerProperties.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, "false");
-        consumerProperties.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, OFFSET_RESET_EARLIER);
-
+        properties = new Properties();
+        properties.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, KAFKA_BROKERS);
+        properties.put(ProducerConfig.CLIENT_ID_CONFIG, CLIENT_ID);
+        properties.put(ConsumerConfig.GROUP_ID_CONFIG, GROUP_ID_CONFIG);
+        properties.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG,  LongSerializer.class.getName());
+        properties.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, LongDeserializer.class.getName());
+        properties.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
+        properties.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
+        properties.put(ProducerConfig.REQUEST_TIMEOUT_MS_CONFIG, 5000);
+        properties.put(ConsumerConfig.MAX_POLL_RECORDS_CONFIG, MAX_POLL_RECORDS);
+        properties.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, "false");
+        properties.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, OFFSET_RESET_EARLIER);
     }
 
     @Override
@@ -70,20 +66,23 @@ public class KafkaPubSubComm implements PubSubComm {
 
     @Override
     public boolean connect() {
-        consumer = new KafkaConsumer<>(consumerProperties);
-        producer = new KafkaProducer<>(producerProperties);
+        consumer = new KafkaConsumer<>(properties);
+        producer = new KafkaProducer<>(properties);
         return true;
+    }
+
+    private long generateRandomKey(){
+        return (long)(Math.random() *1000);
     }
 
     @Override
     public void publish(String topic, String message) {
         ProducerRecord<Long, String> record = new ProducerRecord<>
-                (topic,(long)(Math.random() *1000),  message);
+                (topic,generateRandomKey(),  message);
         try {
             producer.send(record).get();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
+        } catch (Exception e) {
+            log.error(e+"");
             e.printStackTrace();
         }
     }
@@ -109,6 +108,8 @@ public class KafkaPubSubComm implements PubSubComm {
                 consumer.commitAsync();
             }
         });
+        subscribeThread.setName("KafkaSubscribeThread");
+        subscribeThread.setDaemon(true);
         subscribeThread.start();
     }
 
