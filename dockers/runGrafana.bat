@@ -1,1 +1,1 @@
-docker run -d -p 3000:3000 grafana/grafana
+docker run -d -p 3000:3000 -v %cd%\MessageOrientedCommunicationTest\dockers\grafana-data:/var/lib/grafana grafana/grafana

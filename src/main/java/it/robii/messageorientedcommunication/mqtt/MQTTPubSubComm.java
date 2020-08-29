@@ -17,6 +17,7 @@ public class MQTTPubSubComm implements PubSubComm {
         MQTTPubSubComm comm = null;
         try {
             comm = new MQTTPubSubComm(ConfigManager.appYamlConfig().getMqttAddress());
+            comm.notAnonymous(ConfigManager.appYamlConfig().getMqttUsername(), ConfigManager.appYamlConfig().getMqttPassword());
             comm.connect();
         } catch (Throwable e) {
             log.error(e);
@@ -26,7 +27,6 @@ public class MQTTPubSubComm implements PubSubComm {
 
     Map<String, Consumer<String>> onMessageReceivedTable = new HashMap<>();
     public MQTTPubSubComm(String address, String uuid) throws MqttException {
-
         mqttClient = new MqttClient(address, uuid);
     }
     public MQTTPubSubComm(String address) throws MqttException {
@@ -34,6 +34,15 @@ public class MQTTPubSubComm implements PubSubComm {
     }
     
     MqttClient mqttClient;
+    boolean isAnonymous;
+    String username;
+    String pass;
+
+    private void notAnonymous(String mqttUsername, String mqttPassword) {
+        this.username = mqttUsername;
+        this.pass = mqttPassword;
+        this.isAnonymous = false;
+    }
 
 
     @Override
@@ -45,8 +54,14 @@ public class MQTTPubSubComm implements PubSubComm {
     public boolean connect() {
         try {
             MqttConnectOptions connectOptions = new MqttConnectOptions();
-            connectOptions.setMaxInflight(Integer.MAX_VALUE);
-            mqttClient.connect();
+            // connectOptions.setMaxInflight(Short.MAX_VALUE);
+
+            if(!isAnonymous) {
+                connectOptions.setUserName(username);
+                connectOptions.setPassword(pass.toCharArray());
+            }
+
+            mqttClient.connect(connectOptions);
             return isConnected();
         } catch (MqttException e) {
             log.error(e);

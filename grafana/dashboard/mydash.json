@@ -16,7 +16,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": 1,
-  "iteration": 1598397357171,
+  "iteration": 1598725437983,
   "links": [],
   "panels": [
     {
@@ -60,7 +60,7 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 102
+                "value": null
               }
             ]
           },
@@ -302,28 +302,12 @@
         "label": "TestNo",
         "multi": false,
         "name": "testNo",
-        "options": [
-          {
-            "selected": false,
-            "text": "1",
-            "value": "1"
-          },
-          {
-            "selected": false,
-            "text": "2",
-            "value": "2"
-          },
-          {
-            "selected": false,
-            "text": "4",
-            "value": "4"
-          }
-        ],
+        "options": [],
         "query": "select testNo from test_params",
-        "refresh": 0,
+        "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
-        "sort": 0,
+        "sort": 3,
         "tagValuesQuery": "",
         "tags": [],
         "tagsQuery": "",
@@ -353,5 +337,5 @@
   "timezone": "",
   "title": "PerformanceTestVisualisation",
   "uid": "Z_ESiPNGz",
-  "version": 6
+  "version": 8
 }

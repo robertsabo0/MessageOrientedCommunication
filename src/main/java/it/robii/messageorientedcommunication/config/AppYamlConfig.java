@@ -6,7 +6,11 @@ import lombok.Data;
 public class AppYamlConfig {
     private String hellostring;
     private String pubSubTopic;
+
     private String mqttAddress;
+    private String mqttUsername;
+    private String mqttPassword;
+
     private String redisAddress;
     private String kafkaAddress;
 }

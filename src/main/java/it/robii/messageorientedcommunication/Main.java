@@ -25,7 +25,12 @@ public class Main {
         topic = ConfigManager.appYamlConfig().getPubSubTopic();
         message = "EvetiKur be: "+ Instant.now();
 
-        // TestDBResultSaver();
+        if(true) {
+            // TestMqtt();
+            TestKafka();
+            return;
+        }
+       // TestDBResultSaver();
 
         int testDuration = 10;
         int everyXms = 50;
