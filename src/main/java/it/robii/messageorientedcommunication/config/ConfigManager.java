@@ -6,10 +6,7 @@ import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import lombok.extern.log4j.Log4j2;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.net.URL;
+import java.io.InputStream;
 
 @Log4j2
 public class ConfigManager {
@@ -19,11 +16,11 @@ public class ConfigManager {
     static{
         try {
             ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-            URL resUrl = classLoader.getResource(appYamlFile);
-            if(resUrl == null )throw new FileNotFoundException("Config file "+appYamlFile+" not found");
-            File file = new File(resUrl.getFile());
+            InputStream stream = classLoader.getResourceAsStream(appYamlFile);
+            // File file = new File(stream);
+            // if(!file.exists())throw new FileNotFoundException("Config file "+appYamlFile+" not found");
             ObjectMapper om = new ObjectMapper(new YAMLFactory());
-            appYamlConfig = om.readValue(file, AppYamlConfig.class);
+            appYamlConfig = om.readValue(stream, AppYamlConfig.class);
 
             log.debug("All config initializes successfully!");
         } catch (Throwable e) {

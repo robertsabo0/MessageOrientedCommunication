@@ -1,4 +1,4 @@
-hellostring: "Hello, world!"
+hellostring: "Hello, worlda!"
 pubSubTopic: robiTestingTopic
 mqttAddress: tcp://localhost:1883
 mqttUsername: robii

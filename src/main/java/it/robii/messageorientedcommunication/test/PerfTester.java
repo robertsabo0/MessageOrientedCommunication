@@ -100,6 +100,7 @@ public class PerfTester {
             log.debug("ok, got message, let's hanlde it");
             Instant gotMessageOn = Instant.now();
             SendingMessage message = SendingMessage.fromJson(msg);
+            log.debug("Message length is "+message.data.length());
             long diff = -1;
             if(messagesSent.containsKey(message.guid)) {
                 Instant sentOn = messagesSent.remove(message.guid);
@@ -107,7 +108,7 @@ public class PerfTester {
             }
             resultSaver.addResult(diff);
             log.debug("this one handled!");
-        });
+        } );
     }
 
     /**

@@ -1,0 +1,53 @@
+version: '2'
+
+networks:
+  kafka-net:
+    driver: bridge
+
+services:
+  zookeeper-server:
+    image: 'bitnami/zookeeper:latest'
+    networks:
+      - kafka-net
+    ports:
+      - '2181:2181'
+    environment:
+      - ZOO_ENABLE_AUTH=yes
+      - ZOO_SERVER_USERS=kafka
+      - ZOO_SERVER_PASSWORDS=kafka_password
+  kafka-server1:
+    image: 'bitnami/kafka:latest'
+    networks:
+      - kafka-net    
+    ports:
+      - '9092:9092'
+    environment:
+      - KAFKA_CFG_ZOOKEEPER_CONNECT=zookeeper-server:2181
+      - KAFKA_CFG_LISTENERS=SASL_SSL://localhost:9092
+      - KAFKA_CFG_ADVERTISED_LISTENERS=SASL_SSL://localhost:9092
+      - KAFKA_LISTENER_SECURITY_PROTOCOL_MAP=SASL_SSL:SASL_SSL
+      - KAFKA_INTER_BROKER_LISTENER_NAME=SASL_SSL
+      - KAFKA_ZOOKEEPER_USER=kafka
+      - KAFKA_ZOOKEEPER_PASSWORD=kafka_password
+      - KAFKA_ZOOKEEPER_PROTOCOL=SASL
+      - KAFKA_CLIENT_USER=user
+      - KAFKA_CLIENT_PASSWORD=password
+      - KAFKA_CERTIFICATE_PASSWORD=masterPass
+    depends_on:
+      - zookeeper-server
+    volumes:
+      #- D:\Projects\master\MessageOrientedCommunicationTest\dockers\kafka:/bitnami/kafka
+      - D:\Projects\master\MessageOrientedCommunicationTest\dockers\kafkaSec\KeyStore.jks:/bitnami/kafka/config/certs/kafka.keystore.jks:ro
+      - D:\Projects\master\MessageOrientedCommunicationTest\dockers\kafkaSec\truststore.jks:/bitnami/kafka/config/certs/kafka.truststore.jks:ro
+  #kafka-server2:
+  #  image: 'bitnami/kafka:latest'
+  #  networks:
+  #    - kafka-net    
+    # ports:
+    #   - '9093:9092'
+    # environment:
+    #   - KAFKA_CFG_ZOOKEEPER_CONNECT=zookeeper-server:2181
+    #   - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://localhost:9093
+    #   - ALLOW_PLAINTEXT_LISTENER=yes
+    # depends_on:
+    #   - zookeeper-server

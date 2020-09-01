@@ -4,6 +4,8 @@ import it.robii.messageorientedcommunication.PubSubComm;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.function.Consumer;
 
 import it.robii.messageorientedcommunication.config.ConfigManager;
@@ -16,6 +18,7 @@ import redis.clients.jedis.JedisPubSub;
 public class RedisPubSubComm implements PubSubComm {
 
     URI uri;
+    ScheduledExecutorService executorService = new ScheduledThreadPoolExecutor(16);
     public static RedisPubSubComm buildAndConnect(){
         String address = ConfigManager.appYamlConfig().getRedisAddress();
         RedisPubSubComm comm = null;
@@ -55,7 +58,9 @@ public class RedisPubSubComm implements PubSubComm {
             @Override
             public void onMessage(String channel, String message) {
                 log.debug("Message received");
-                onMessageAction.accept(message);
+                executorService.execute(() ->{
+                    onMessageAction.accept(message);
+                });
             }
         };
         Thread th = new Thread(() -> {

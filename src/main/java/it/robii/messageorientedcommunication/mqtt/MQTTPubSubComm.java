@@ -8,6 +8,8 @@ import org.eclipse.paho.client.mqttv3.*;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.function.Consumer;
 
 @Log4j2
@@ -37,6 +39,8 @@ public class MQTTPubSubComm implements PubSubComm {
     boolean isAnonymous;
     String username;
     String pass;
+    int qos = 0;
+    ScheduledExecutorService executorService = new ScheduledThreadPoolExecutor(16);
 
     private void notAnonymous(String mqttUsername, String mqttPassword) {
         this.username = mqttUsername;
@@ -54,7 +58,7 @@ public class MQTTPubSubComm implements PubSubComm {
     public boolean connect() {
         try {
             MqttConnectOptions connectOptions = new MqttConnectOptions();
-            // connectOptions.setMaxInflight(Short.MAX_VALUE);
+            connectOptions.setMaxInflight(999);
 
             if(!isAnonymous) {
                 connectOptions.setUserName(username);
@@ -73,7 +77,7 @@ public class MQTTPubSubComm implements PubSubComm {
     public void publish(String topic, String message) {
         try {
             MqttMessage msg = new MqttMessage(message.getBytes());
-            msg.setQos(0);
+            msg.setQos(qos);
             mqttClient.publish(topic, msg);
         } catch (MqttException e) {
             log.error(e);
@@ -93,10 +97,12 @@ public class MQTTPubSubComm implements PubSubComm {
 
             @Override
             public void messageArrived(String topic, MqttMessage mqttMessage) throws Exception {
-                String message = new String(mqttMessage.getPayload());
-                log.debug("Got on topic:"+topic+" message: "+message);
-                if(onMessageReceivedTable.containsKey(topic))
-                    onMessageReceivedTable.get(topic).accept(message);
+                executorService.execute(() ->{
+                    String message = new String(mqttMessage.getPayload());
+                    log.debug("Got on topic:"+topic+" message");
+                    if(onMessageReceivedTable.containsKey(topic))
+                        onMessageReceivedTable.get(topic).accept(message);
+                });
             }
 
             @Override
@@ -105,7 +111,7 @@ public class MQTTPubSubComm implements PubSubComm {
             }
         });
         try {
-            mqttClient.subscribe(topic);
+            mqttClient.subscribe(topic, qos);
         } catch (MqttException e) {
             log.error(e);
         }

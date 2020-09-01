@@ -6,11 +6,14 @@
 
     <groupId>robii.it</groupId>
     <artifactId>MessageOrientedCommunicationTest</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0</version>
+    <packaging>jar</packaging>
 
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
+        <maven.resource.version>3.2.0</maven.resource.version>
+        <maven.build.version>3.1.0</maven.build.version>
         <jackson-version>2.11.2</jackson-version>
         <log4j2-verion>2.13.3</log4j2-verion>
         <paho-mqtt-version>1.2.5</paho-mqtt-version>
@@ -90,4 +93,30 @@
             <version>${hibernate-version}</version>
         </dependency>
     </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <mainClass>it.robii.messageorientedcommunication.Main</mainClass>
+                        </manifest>
+                    </archive>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>make-assembly</id> <!-- this is used for inheritance merges -->
+                        <phase>package</phase> <!-- bind to the packaging phase -->
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 </project>

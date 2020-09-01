@@ -13,6 +13,7 @@ import it.robii.messageorientedcommunication.test.results.ResultSaver;
 import lombok.extern.log4j.Log4j2;
 
 import java.time.Instant;
+import java.util.concurrent.Semaphore;
 
 @Log4j2
 public class Main {
@@ -25,6 +26,29 @@ public class Main {
         topic = ConfigManager.appYamlConfig().getPubSubTopic();
         message = "EvetiKur be: "+ Instant.now();
 
+        int testDuration        = 30;
+        int everyXms            = 100;
+        int sendYmessages       = 3;
+        int msgSize             = 1_000_000;
+        int paralelOnThreads    = 3;
+
+        if(args!= null && args.length > 0 &&
+                ((args[0]+"").trim().equals("-h") ||
+                        (args[0]+"").trim().equals("--help"))){
+            printUsage();
+            return;
+        }
+        testDuration = tryToReadAndParse(args,0, testDuration, "testDuration");
+        everyXms = tryToReadAndParse(args,1, everyXms, "everyXms");
+        sendYmessages = tryToReadAndParse(args,2, sendYmessages, "sendYmessages");
+        msgSize = tryToReadAndParse(args,3, msgSize, "msgSize");
+        paralelOnThreads = tryToReadAndParse(args,4, paralelOnThreads, "paralelOnThreads");
+
+        log.debug("testDuration="+testDuration);
+        log.debug("everyXms="+everyXms);
+        log.debug("sendYmessages="+sendYmessages);
+        log.debug("msgSize="+msgSize);
+        log.debug("paralelOnThreads="+paralelOnThreads);
         if(true) {
             // TestMqtt();
             TestKafka();
@@ -32,36 +56,50 @@ public class Main {
         }
        // TestDBResultSaver();
 
-        int testDuration = 10;
-        int everyXms = 50;
-        int sendYmessages = 10;
-        int msgSize = 1000;
-        int paralelOnThreads = 5;
         // ResultSaver resultSaver = new JSONResultSaver();
         ResultSaver resultSaver = new DBResultSaver();
 
-        /*
-        switch (commType){
-            case KAFKA: break; // TestKafka(); break; neki problemi. ne mogu 2 puta subscribe. Zabaviti se s ovim...
-            case MQTT: TestMqtt(); break;
-            case REDIS: TestRedis(); break;
-        }*/
         CommType[] commTypesOrdered = {
-          // CommType.KAFKA,
-          // CommType.REDIS,
+          CommType.KAFKA,
+          CommType.REDIS,
           CommType.MQTT
         };
         for(CommType commType : commTypesOrdered) {
             log.info("Starting test with "+commType);
             sleep(1000);
             PerfTester.InitTest(testDuration, everyXms, sendYmessages, msgSize, paralelOnThreads, commType, resultSaver)
-                    .smashIt();
+                     .smashIt();
             log.info("done test with "+commType);
             sleep(1000);
         }
         log.info("Done with all testes!");
         sleep(2000);
         System.exit(0);
+    }
+
+    private static int tryToReadAndParse(String[] args, int i, int defVal, String paramName) {
+        String toParse = null;
+        if(args != null && args.length > i+1)
+            toParse = args[i];
+        toParse = (toParse +"").trim();
+        try {
+            int parsed = Integer.parseInt(toParse);
+
+            return  parsed;
+        } catch (Exception ex){
+            System.out.println("Not parsed "+paramName+" from index "+i+". Set default "+defVal);
+            return defVal;
+        }
+    }
+
+    private static void printUsage() {
+        System.out.println("commands on run are: 1 2 3 4 5");
+        System.out.println("Where: ");
+        System.out.println("1: Test duration in seconds");
+        System.out.println("2: Cycle interval of sending messages");
+        System.out.println("3: Number of messages to send");
+        System.out.println("4: Message size");
+        System.out.println("5: Number of threads sending from");
     }
 
     private static void TestDBResultSaver() {
@@ -107,8 +145,19 @@ public class Main {
         }
     }
 
+    final static Semaphore semaphore = new Semaphore(0);
     static void testPubSub(PubSubComm comm){
-        comm.subscribe(topic, t -> log.debug("Hey, man, i got a message:"+t));
+        log.debug("let's subscribe!");
+        comm.subscribe(topic, t -> {
+            log.debug("Hey, man, i got a message:"+t);
+            semaphore.release();
+        });
+        log.debug("Subscribed!");
+        log.debug("Let's publish...");
         comm.publish(topic, message);
+        log.debug("Published...");
+        log.debug("Waiting response...");
+        try { semaphore.acquire(); } catch (InterruptedException e) {}
+        log.debug("Got it. all good!");
     }
 }

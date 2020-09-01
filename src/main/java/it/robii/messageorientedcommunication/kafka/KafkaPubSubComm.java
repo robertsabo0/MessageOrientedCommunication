@@ -21,6 +21,8 @@ import java.time.Duration;
 import java.util.Collections;
 import java.util.Properties;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.function.Consumer;
 
 @Log4j2
@@ -44,6 +46,8 @@ public class KafkaPubSubComm implements PubSubComm {
     Properties properties;
     KafkaProducer<Long, String> producer;
     KafkaConsumer<Long, String> consumer;
+    ScheduledExecutorService executorService = new ScheduledThreadPoolExecutor(16);
+
     public KafkaPubSubComm(){
         properties = new Properties();
         properties.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, KAFKA_BROKERS);
@@ -102,7 +106,9 @@ public class KafkaPubSubComm implements PubSubComm {
                 if (consumerRecords.count() == 0)  continue;
                 //print each record.
                 consumerRecords.forEach(record -> {
-                    onMessage.accept(record.value());
+                    executorService.execute(() ->{
+                        onMessage.accept(record.value());
+                    });
                 });
                 // commits the offset of record to broker.
                 consumer.commitAsync();

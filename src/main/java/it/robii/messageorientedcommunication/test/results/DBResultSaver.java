@@ -1,19 +1,13 @@
 package it.robii.messageorientedcommunication.test.results;
 
-import com.fasterxml.classmate.AnnotationConfiguration;
 import it.robii.messageorientedcommunication.test.TestParams;
 import it.robii.messageorientedcommunication.test.results.dbenities.DbTestParams;
 import it.robii.messageorientedcommunication.test.results.dbenities.DbTestResult;
 import it.robii.messageorientedcommunication.test.results.dbenities.DbTestRun;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.boot.Metadata;
-import org.hibernate.boot.MetadataSources;
-import org.hibernate.boot.registry.StandardServiceRegistry;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
