@@ -126,8 +126,19 @@ public class PerfTester {
      * WARNING: in case of message loss, this could block... TODO: fix the warning
      */
     private void waitForReceiveAllMessages(){
-        while(!messagesSent.isEmpty()){
+        int waitingSeconds = 20;
+        while(!messagesSent.isEmpty() && --waitingSeconds > 0){
             log.debug("waiting to receive all messages. Stil have "+messagesSent.size()+" not received");
+            sleep(1000);
+        }
+        if(!messagesSent.isEmpty())
+            addSignToNotAllDataReceived();
+
+    }
+    private void addSignToNotAllDataReceived(){
+        for(int i = 0; i < 5; i++){
+            resultSaver.addResult(2222);
+            log.debug("NOT ALL DATA RECEIVED FOR "+testParams.getCommType());
             sleep(100);
         }
     }

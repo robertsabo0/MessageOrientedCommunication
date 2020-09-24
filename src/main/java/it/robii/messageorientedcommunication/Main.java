@@ -49,12 +49,12 @@ public class Main {
         log.debug("sendYmessages="+sendYmessages);
         log.debug("msgSize="+msgSize);
         log.debug("paralelOnThreads="+paralelOnThreads);
-        if(true) {
-            // TestMqtt();
-            TestKafka();
-            return;
-        }
-       // TestDBResultSaver();
+//        if(true) {
+//            TestMqtt();
+//            TestKafka();
+//            return;
+//        }
+       //TestDBResultSaver();
 
         // ResultSaver resultSaver = new JSONResultSaver();
         ResultSaver resultSaver = new DBResultSaver();
