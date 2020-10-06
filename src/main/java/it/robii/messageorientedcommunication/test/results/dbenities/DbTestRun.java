@@ -38,6 +38,7 @@ public class DbTestRun {
         setCommType(commType.name());
     }
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

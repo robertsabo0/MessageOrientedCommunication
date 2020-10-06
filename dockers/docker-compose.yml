@@ -25,8 +25,8 @@ services:
       - ALLOW_PLAINTEXT_LISTENER=yes
     depends_on:
       - zookeeper-server
-    volumes:
-      - D:\Projects\master\MessageOrientedCommunicationTest\dockers\kafka:/bitnami/kafka
+    #volumes:
+    #  - C:\tmp\kafka:/bitnami/kafka
   #kafka-server2:
   #  image: 'bitnami/kafka:latest'
   #  networks:

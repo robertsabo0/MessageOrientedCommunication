@@ -14,6 +14,7 @@ import lombok.extern.log4j.Log4j2;
 
 import java.time.Instant;
 import java.util.concurrent.Semaphore;
+import java.util.logging.Level;
 
 @Log4j2
 public class Main {
@@ -25,12 +26,11 @@ public class Main {
         log.debug(ConfigManager.appYamlConfig().getHellostring());
         topic = ConfigManager.appYamlConfig().getPubSubTopic();
         message = "EvetiKur be: "+ Instant.now();
-
-        int testDuration        = 30;
+        int testDuration        = 10;
         int everyXms            = 100;
-        int sendYmessages       = 3;
-        int msgSize             = 1_000_000;
-        int paralelOnThreads    = 3;
+        int sendYmessages       = 20;
+        int msgSize             = 10_000;
+        int paralelOnThreads    = 1;
 
         if(args!= null && args.length > 0 &&
                 ((args[0]+"").trim().equals("-h") ||
@@ -69,8 +69,8 @@ public class Main {
             sleep(1000);
             PerfTester.InitTest(testDuration, everyXms, sendYmessages, msgSize, paralelOnThreads, commType, resultSaver)
                      .smashIt();
-            log.info("done test with "+commType);
-            sleep(1000);
+            log.info("done test with "+commType+" cooldown the resources now with 10s sleep...");
+            sleep(10*1000);
         }
         log.info("Done with all testes!");
         sleep(2000);
@@ -79,7 +79,7 @@ public class Main {
 
     private static int tryToReadAndParse(String[] args, int i, int defVal, String paramName) {
         String toParse = null;
-        if(args != null && args.length > i+1)
+        if(args != null && args.length > i)
             toParse = args[i];
         toParse = (toParse +"").trim();
         try {

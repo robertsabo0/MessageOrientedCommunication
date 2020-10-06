@@ -102,6 +102,8 @@ public class MQTTPubSubComm implements PubSubComm {
                     log.debug("Got on topic:"+topic+" message");
                     if(onMessageReceivedTable.containsKey(topic))
                         onMessageReceivedTable.get(topic).accept(message);
+                    else
+                        log.error("PROBLEM!");
                 });
             }
 

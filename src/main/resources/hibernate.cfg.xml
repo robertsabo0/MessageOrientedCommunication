@@ -9,7 +9,7 @@
         <property name="hibernate.connection.username">mysqluser</property>
         <property name="hibernate.connection.password">mysqlpass</property>
         <property name="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</property>
-        <property name="show_sql">true</property>
+        <property name="show_sql">false</property>
         <mapping class="it.robii.messageorientedcommunication.test.results.dbenities.DbTestParams"/>
         <mapping class="it.robii.messageorientedcommunication.test.results.dbenities.DbTestRun"/>
         <mapping class="it.robii.messageorientedcommunication.test.results.dbenities.DbTestResult"/>

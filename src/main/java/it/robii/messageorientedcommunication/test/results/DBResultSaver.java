@@ -1,5 +1,6 @@
 package it.robii.messageorientedcommunication.test.results;
 
+import it.robii.messageorientedcommunication.CommType;
 import it.robii.messageorientedcommunication.test.TestParams;
 import it.robii.messageorientedcommunication.test.results.dbenities.DbTestParams;
 import it.robii.messageorientedcommunication.test.results.dbenities.DbTestResult;
@@ -9,19 +10,21 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class DBResultSaver extends ResultSaver{
 
     static DbTestParams dbTestParams;
     DbTestRun testRun;
-    List<DbTestResult> testResultList;
+    ConcurrentLinkedQueue<DbTestResult> testResultList;
 
     @Override
     public void initTestConcrete(TestParams params) {
         saveTestParams(params);
 
-        testResultList = new ArrayList<>();
+        testResultList = new ConcurrentLinkedQueue<>();
         testRun = new DbTestRun();
         testRun.setCommType(params.getCommType());
         testRun.setTestParamsByTestParamsId(dbTestParams);
@@ -42,8 +45,16 @@ public class DBResultSaver extends ResultSaver{
     @Override
     public void done() {
         Session session = buildSessionFactory().openSession();
-        for(DbTestResult res : testResultList)
+        HashMap<CommType, Integer> typeToCount = new HashMap<>();
+        typeToCount.put(CommType.KAFKA, 0);
+        typeToCount.put(CommType.MQTT, 0);
+        typeToCount.put(CommType.REDIS, 0);
+
+        for(DbTestResult res : testResultList) {
             session.save(res);
+            CommType type = CommType.valueOf(res.getTestRunByTestRunId().getCommType());
+            typeToCount.put(type, typeToCount.get(type)+1);
+        }
         session.close();
     }
 

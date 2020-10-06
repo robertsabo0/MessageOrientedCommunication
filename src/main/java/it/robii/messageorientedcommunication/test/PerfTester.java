@@ -115,10 +115,13 @@ public class PerfTester {
      * Wait with current thread to empty the sending queue
      */
     private void waitForEmptyTheQueue(){
-        while(!messageSendingQueue.isEmpty()){
+        int waitingSeconds = 20;
+        while(!messageSendingQueue.isEmpty() && --waitingSeconds > 0){
             log.debug("waiting empty the queue. Still have "+messageSendingQueue.size()+" not sent");
-            sleep(100);
+            sleep(1000);
         }
+        if(!messageSendingQueue.isEmpty())
+            addSignToNotAllDataPublished();
     }
 
     /**
@@ -135,9 +138,12 @@ public class PerfTester {
             addSignToNotAllDataReceived();
 
     }
-    private void addSignToNotAllDataReceived(){
+    private void addSignToNotAllDataReceived(){        addSignThat(2222);    }
+    private void addSignToNotAllDataPublished(){        addSignThat(2221);    }
+
+    private void addSignThat(int code){
         for(int i = 0; i < 5; i++){
-            resultSaver.addResult(2222);
+            resultSaver.addResult(code);
             log.debug("NOT ALL DATA RECEIVED FOR "+testParams.getCommType());
             sleep(100);
         }
@@ -154,8 +160,8 @@ public class PerfTester {
     }
 
     private void messageSendingFromQueue(){
-        try{
-            while(testRunning){
+        while(testRunning){
+            try{
                 if(messageSendingQueue.isEmpty())
                     sleep(10);
                 SendingMessage msg;
@@ -165,10 +171,10 @@ public class PerfTester {
                     messagesSent.put(msg.guid, Instant.now());
                     communication.publish(this.topic, toSend);
                 }
+            } catch (Exception ex){
+                log.error("FATAL ERROR IN DEQUEUE thread! : "+ex.getMessage());
+                ex.printStackTrace();
             }
-        } catch (Exception ex){
-            log.error("FATAL ERROR IN DEQUEUE thread! : "+ex.getMessage());
-            ex.printStackTrace();
         }
     }
 }

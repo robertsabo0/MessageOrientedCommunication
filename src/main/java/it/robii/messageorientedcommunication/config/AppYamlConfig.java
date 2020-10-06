@@ -13,4 +13,6 @@ public class AppYamlConfig {
 
     private String redisAddress;
     private String kafkaAddress;
+
+    private Object log4j;
 }

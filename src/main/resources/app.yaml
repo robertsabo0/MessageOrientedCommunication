@@ -6,3 +6,7 @@ mqttPassword: masterPass
 
 redisAddress: tcp://localhost:6379
 kafkaAddress: tcp://localhost:9092
+log4j:
+  logger:
+    org:
+      hibernate: INFO
