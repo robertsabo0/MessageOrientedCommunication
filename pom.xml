@@ -15,7 +15,7 @@
         <maven.resource.version>3.2.0</maven.resource.version>
         <maven.build.version>3.1.0</maven.build.version>
         <jackson-version>2.11.2</jackson-version>
-        <log4j2-verion>2.13.3</log4j2-verion>
+        <log4j2-verion>2.17.1</log4j2-verion>
         <paho-mqtt-version>1.2.5</paho-mqtt-version>
         <redis-jedis-version>3.3.0</redis-jedis-version>
         <apache-kafka-version>2.6.0</apache-kafka-version>
