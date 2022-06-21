@@ -19,7 +19,7 @@
         <paho-mqtt-version>1.2.5</paho-mqtt-version>
         <redis-jedis-version>3.3.0</redis-jedis-version>
         <apache-kafka-version>2.6.0</apache-kafka-version>
-        <mysql-verion>8.0.21</mysql-verion>
+        <mysql-verion>8.0.28</mysql-verion>
         <hibernate-version>5.4.20.Final</hibernate-version>
     </properties>
 
